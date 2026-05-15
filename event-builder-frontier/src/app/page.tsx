@@ -8,6 +8,8 @@ import { useEvents, useOrgs, useLocations, useTypes } from "@/hooks/use-registry
 import { Button } from "@/components/ui/button";
 import { Plus, CalendarRange } from "lucide-react";
 
+import { FormattedDate } from "@/components/ui/formatted-date";
+
 export default function TimelinePage() {
   const events = useEvents();
   const orgs = useOrgs();
@@ -57,12 +59,6 @@ export default function TimelinePage() {
                 .filter(Boolean) as typeof orgs;
               const side = i % 2 === 0 ? "right" : "left";
               const accent = type?.colorHex ?? "#8b5cf6";
-              const date = new Date(e.timestamp);
-              const dateChip = date.toLocaleDateString(undefined, {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              });
 
               return (
                 <li key={e.id} className="relative">
@@ -74,7 +70,10 @@ export default function TimelinePage() {
                         background: `linear-gradient(135deg, ${accent}, ${accent}cc)`,
                       }}
                     >
-                      {dateChip}
+                      <FormattedDate 
+                        date={e.timestamp} 
+                        options={{ month: "short", day: "numeric", year: "numeric" }} 
+                      />
                     </span>
                   </div>
 

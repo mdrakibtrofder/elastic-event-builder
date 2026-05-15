@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { useEvents, useLocations, useOrgs, useTypes, eventsApi } from "@/hooks/use-registry";
 import { useMemo, useState } from "react";
 import { Pencil, Trash2, Plus } from "lucide-react";
+import { FormattedDate } from "@/components/ui/formatted-date";
 
 export default function DashboardPage() {
   const events = useEvents();
@@ -94,7 +95,7 @@ export default function DashboardPage() {
                   <TableCell>{o?.name ?? "—"}</TableCell>
                   <TableCell>{l?.name ?? "—"}</TableCell>
                   <TableCell className="text-muted-foreground">
-                    {new Date(e.timestamp).toLocaleDateString()}
+                    <FormattedDate date={e.timestamp} />
                   </TableCell>
                   <TableCell className="text-right">
                     <Button asChild size="icon" variant="ghost">

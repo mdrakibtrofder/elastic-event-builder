@@ -4,6 +4,8 @@ import type { EventItem, EventType, Location, Organization } from "@/lib/types";
 import Link from "next/link";
 import { MapPin, Users, Calendar, ArrowRight } from "lucide-react";
 
+import { FormattedDate } from "@/components/ui/formatted-date";
+
 type Props = {
   event: EventItem;
   type?: EventType;
@@ -14,16 +16,6 @@ type Props = {
 };
 
 export function TimelineCard({ event, type, org, location, collaborators, side }: Props) {
-  const date = new Date(event.timestamp);
-  const dateLabel = date.toLocaleDateString(undefined, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-  const timeLabel = date.toLocaleTimeString(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-  });
   const accent = type?.colorHex ?? "var(--primary)";
 
   return (
@@ -44,9 +36,20 @@ export function TimelineCard({ event, type, org, location, collaborators, side }
           className={`flex items-center gap-2 text-xs text-muted-foreground mb-3 ${side === "left" ? "md:justify-end" : ""}`}
         >
           <Calendar className="h-3.5 w-3.5" />
-          <span className="font-medium">{dateLabel}</span>
+          <span className="font-medium">
+            <FormattedDate 
+              date={event.timestamp} 
+              options={{ month: "short", day: "numeric", year: "numeric" }} 
+            />
+          </span>
           <span className="opacity-50">·</span>
-          <span>{timeLabel}</span>
+          <span>
+            <FormattedDate 
+              date={event.timestamp} 
+              mode="time"
+              options={{ hour: "numeric", minute: "2-digit" }} 
+            />
+          </span>
         </div>
 
         <h3 className="text-lg font-semibold tracking-tight text-foreground mb-2 leading-snug">
