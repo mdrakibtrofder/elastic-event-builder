@@ -1,0 +1,12 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/analytics/page": "/analytics",
+  "/dashboard/page": "/dashboard",
+  "/events/[eventId]/edit/page": "/events/[eventId]/edit",
+  "/events/new/page": "/events/new",
+  "/locations/page": "/locations",
+  "/organizations/page": "/organizations",
+  "/page": "/",
+  "/types/page": "/types"
+}

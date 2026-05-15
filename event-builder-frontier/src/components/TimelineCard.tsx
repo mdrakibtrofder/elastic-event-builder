@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { EventItem, EventType, Location, Organization } from "@/lib/types";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { MapPin, Users, Calendar, ArrowRight } from "lucide-react";
 
 type Props = {
@@ -95,8 +95,7 @@ export function TimelineCard({ event, type, org, location, collaborators, side }
         </div>
 
         <Link
-          to="/events/$eventId/edit"
-          params={{ eventId: event.id }}
+          href={`/events/${event.id}/edit`}
           className={`inline-flex items-center gap-1 text-xs font-medium text-primary mt-4 hover:gap-2 transition-all ${side === "left" ? "md:ml-auto" : ""}`}
         >
           View details <ArrowRight className="h-3 w-3" />

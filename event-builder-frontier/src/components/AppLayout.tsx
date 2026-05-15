@@ -1,4 +1,7 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+'use client';
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   CalendarClock,
   PlusCircle,
@@ -12,27 +15,26 @@ import {
 import { cn } from "@/lib/utils";
 
 const nav = [
-  { to: "/", label: "Timeline", icon: CalendarClock },
-  { to: "/events/new", label: "Event Builder", icon: PlusCircle },
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/", label: "Timeline", icon: CalendarClock },
+  { href: "/events/new", label: "Event Builder", icon: PlusCircle },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/analytics", label: "Analytics", icon: BarChart3 },
 ] as const;
 
 const registry = [
-  { to: "/organizations", label: "Organizations", icon: Building2 },
-  { to: "/locations", label: "Locations", icon: MapPin },
-  { to: "/types", label: "Event Types", icon: Tags },
+  { href: "/organizations", label: "Organizations", icon: Building2 },
+  { href: "/locations", label: "Locations", icon: MapPin },
+  { href: "/types", label: "Event Types", icon: Tags },
 ] as const;
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
-  const { location } = useRouterState();
-  const path = location.pathname;
+  const path = usePathname();
 
   return (
     <div className="min-h-screen flex bg-background">
       <aside className="w-64 shrink-0 border-r border-sidebar-border bg-sidebar hidden md:flex md:flex-col">
         <div className="px-5 py-6">
-          <Link to="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <span className="h-9 w-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
               <Sparkles className="h-5 w-5 text-primary-foreground" />
             </span>
@@ -46,13 +48,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <SectionLabel>Workspace</SectionLabel>
           <div className="space-y-0.5 mb-6">
             {nav.map((n) => (
-              <NavItem key={n.to} to={n.to} label={n.label} Icon={n.icon} active={path === n.to} />
+              <NavItem key={n.href} href={n.href} label={n.label} Icon={n.icon} active={path === n.href} />
             ))}
           </div>
           <SectionLabel>Registry</SectionLabel>
           <div className="space-y-0.5">
             {registry.map((n) => (
-              <NavItem key={n.to} to={n.to} label={n.label} Icon={n.icon} active={path === n.to} />
+              <NavItem key={n.href} href={n.href} label={n.label} Icon={n.icon} active={path === n.href} />
             ))}
           </div>
         </nav>
@@ -82,19 +84,19 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 function NavItem({
-  to,
+  href,
   label,
   Icon,
   active,
 }: {
-  to: string;
+  href: string;
   label: string;
   Icon: React.ComponentType<{ className?: string }>;
   active: boolean;
 }) {
   return (
     <Link
-      to={to}
+      href={href}
       className={cn(
         "flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-all",
         active
@@ -108,7 +110,7 @@ function NavItem({
   );
 }
 
-function MobileNav({ path }: { path: string }) {
+function MobileNav({ path }: { path: string | null }) {
   const all = [...nav, ...registry];
   return (
     <div className="md:hidden border-b border-border bg-sidebar/80 backdrop-blur sticky top-0 z-10">
@@ -121,11 +123,11 @@ function MobileNav({ path }: { path: string }) {
       <div className="flex gap-1 px-2 pb-2 overflow-x-auto">
         {all.map((n) => (
           <Link
-            key={n.to}
-            to={n.to}
+            key={n.href}
+            href={n.href}
             className={cn(
               "shrink-0 px-3 py-1.5 rounded-md text-xs font-medium",
-              path === n.to
+              path === n.href
                 ? "bg-gradient-primary text-primary-foreground"
                 : "text-muted-foreground hover:bg-muted",
             )}
