@@ -1,0 +1,43 @@
+# Dependency directories
+node_modules/
+
+# Build artifacts
+dist/
+dist-ssr/
+.output/
+.vinxi/
+.tanstack/
+.nitro/
+
+# NestJS build artifacts
+event-builder-backend/dist/
+event-builder-backend/tsconfig.build.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# IDEs and OS
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Project specific
+.wrangler/
